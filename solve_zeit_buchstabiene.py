@@ -44,7 +44,7 @@ def switch_apps_3():
     pyautogui.keyUp("command")
 
 
-def get_petals(mapping: str, word: str):
+def get_petals(mapping: str, word: str) -> list[int]:
     """
     Translates word characters into flower petals as a list with our numbering.
     """
@@ -54,12 +54,12 @@ def get_petals(mapping: str, word: str):
     ch: str
     for i, ch in enumerate(word):
         idx: int = mapping.index(ch)
-        mapping[idx] = "-"  # mark char no longer available
+        mapping[idx] = "-"  # mark char as no longer available
         petals[i] = idx
     return petals
 
 
-def word_ok(mapping: str, word: str):
+def word_ok(mapping: str, word: str) -> bool:
     """
     Indicates whether word is representable with given mapping.
     """
@@ -72,16 +72,16 @@ def word_ok(mapping: str, word: str):
         return False
 
     # every petal of the flower may be used max once.
-    maplist = list(mapping)
+    map_list = list(mapping)
     try:
         for ch in word:
-            maplist.remove(ch)  # removes 1st occurrence of char in list
+            map_list.remove(ch)  # removes 1st occurrence of char in list
         return True
     except ValueError:
         return False
 
 
-def type_word(word):
+def type_word(word: str) -> None:
     """
     Types the given word and concludes with Return.
     Note: On macOS Ventura 13.4.1 pyautogui.press does not work for Umlauts.
@@ -91,7 +91,7 @@ def type_word(word):
     pyautogui.press("return")
 
 
-def handle_file(mapping, word_list_file):
+def handle_file(mapping: str, word_list_file: str | Path):
     """
     Tries all words in the given file for the given mapping.
     """
