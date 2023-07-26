@@ -151,8 +151,11 @@ def main():
     elif len(sys.argv) == 3:
         mapping = sys.argv[1].lower()
         word = sys.argv[2].lower()
-    elif len(sys.argv) == 2:
-        mapping = sys.argv[1].lower()
+    elif len(sys.argv) in (2, 10):
+        if len(sys.argv) == 2:
+            mapping = sys.argv[1].lower()
+        else:
+            mapping = "".join(sys.argv[1:]).lower()
         switch_apps_2()
         handle_file(mapping, word_list)
         return
