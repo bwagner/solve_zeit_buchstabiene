@@ -20,6 +20,9 @@ The script needs to know what the current map is.
 
 The map is defined by the "flower": its center (seeds) and 8 Petals, hence 9 characters.
 
+<img width="764" alt="image" src="https://github.com/bwagner/solve_zeit_buchstabiene/assets/447049/90cfd0b6-73ae-4921-9407-a4c79bbc72be">
+
+
 Ascii-Representation of the riddle of 26.04.2023:
 
 ```
