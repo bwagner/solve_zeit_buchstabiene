@@ -49,3 +49,5 @@ Hence the script would be called like this:
 
 `./solve_zeit_buchstabiene.py towuhratp`
 
+# Example Run
+See on [Youtube](https://youtu.be/O0rWH5hdgx0)
