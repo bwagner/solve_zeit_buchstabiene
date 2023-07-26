@@ -49,5 +49,13 @@ Hence the script would be called like this:
 
 `./solve_zeit_buchstabiene.py towuhratp`
 
+To only enter a single word, e.g. "autor", call the script as follows:
+
+`./solve_zeit_buchstabiene.py towuhratp autor`
+
+The map can also be entered characterwise, e.g.:
+
+`./solve_zeit_buchstabiene.py t o w u h r a t p autor`
+
 # Example Run
 See on [Youtube](https://youtu.be/O0rWH5hdgx0)
