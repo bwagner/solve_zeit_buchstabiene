@@ -2,9 +2,13 @@
 
 import sys
 from pathlib import Path
+from typing import Optional
 
 import pyautogui
 import pytest
+import typer
+
+LEN_MAPPING = 9
 
 # So far only used on
 # macOS 13.4.1 (Ventura).
@@ -49,7 +53,7 @@ def get_petals(mapping: str, word: str) -> list[int]:
     Translates word characters into flower petals as a list with our numbering.
     """
     mapping: list[str] = list(mapping)
-    petals = [None] * len(word)
+    petals = [-1] * len(word)
     i: int
     ch: str
     for i, ch in enumerate(word):
@@ -84,7 +88,7 @@ def word_ok(mapping: str, word: str) -> bool:
 def type_word(word: str) -> None:
     """
     Types the given word and concludes with Return.
-    Note: On macOS Ventura 13.4.1 pyautogui.press does not work for Umlauts.
+    Note: On macOS Ventura 13.4.1 pyautogui.press() does not work for Umlauts.
     """
     for ch in word:
         pyautogui.press(ch)
@@ -101,16 +105,14 @@ def handle_file(mapping: str, word_list_file: str | Path):
             print(f"trying {word}: ", end="")
             if word_ok(mapping, word):
                 print("candidate!")
-                try:
-                    type_word(word)
-                except Exception:
-                    print("error occurred. continuing...")
+                type_word(word)
             else:
                 print("nope.")
 
 
 ## Tests #######################################################################
 
+# noinspection SpellCheckingInspection
 test_input_verify = [
     ("aemlbgria", "abla", True),
     ("aemlbgria", "ablaa", False),
@@ -128,6 +130,7 @@ def test_verify_word(mapping, word, ok_exp):
     assert word_ok(mapping, word) == ok_exp
 
 
+# noinspection SpellCheckingInspection
 test_input_petals = [
     ("aemlbgria", "abla", [0, 4, 3, 8]),
     ("aemlbgria", "gabel", [5, 0, 4, 1, 3]),
@@ -144,36 +147,42 @@ def test_petals(mapping, word, exp):
 ## Main ########################################################################
 
 
-def main():
-    if len(sys.argv) == 11:
-        mapping = "".join(sys.argv[1:11]).lower()
-        word = sys.argv[10].lower()
-    elif len(sys.argv) == 3:
-        mapping = sys.argv[1].lower()
-        word = sys.argv[2].lower()
-    elif len(sys.argv) in (2, 10):
-        if len(sys.argv) == 2:
-            mapping = sys.argv[1].lower()
-        else:
-            mapping = "".join(sys.argv[1:]).lower()
-        switch_apps_2()
-        handle_file(mapping, word_list)
-        return
-    else:
-        print(
-            "expected either 9 chars and 1 word "
-            "or 1 mapping "
-            f"or 2 words but got {len(sys.argv) - 1}."
+def main(
+    mapping: str,
+    word: Optional[str] = typer.Argument(None),
+    filename: Optional[str] = typer.Option(None, "--file", "-f"),
+):
+    if len(mapping) != LEN_MAPPING:
+        typer.echo(
+            f"Mapping should be a {LEN_MAPPING}-char word. "
+            f"You've provided {mapping} of length {len(mapping)}."
         )
-        return
-    if word_ok(mapping, word):
-        switch_apps_2()
-        click_coords = type_word(word)
-        print(click_coords)
+        raise typer.Exit()
 
+    if word and filename:
+        typer.echo(
+            f"You can't provide both a word ('{word}') "
+            f"and a filename ('{filename}'). Choose one."
+        )
+        raise typer.Exit()
+
+    if word:
+        switch_apps_2()
+        type_word(word)
+    elif filename:
+        file_path = Path(filename).expanduser()
+        switch_apps_2()
+        try:
+            handle_file(mapping, file_path)
+        except IOError as e:
+            switch_apps_2()
+            typer.echo(f"Could not open file {file_path}: {e}")
     else:
-        print(f"word {word} is not representable with {mapping} or is too short.")
+        typer.echo(
+            "You need to provide either a word or a "
+            "filename. You provided neither. Choose one."
+        )
 
 
 if __name__ == "__main__":
-    main()
+    typer.run(main)
