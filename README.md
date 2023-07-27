@@ -45,7 +45,7 @@ We map these characters as follows:
 
 Hence the script would be called like this:
 
-`./solve_zeit_buchstabiene.py towuhratp`-f wordlist_file
+`./solve_zeit_buchstabiene.py towuhratp-f wordlist_file`
 
 To only enter a single word, e.g. "autor" (instead of testing a whole bunch from a file), call the script as follows:
 
