@@ -20,9 +20,7 @@ The mapping is defined by the "flower": its center (seeds) and 8 Petals, hence 9
 
 <img width="764" alt="image" src="https://github.com/bwagner/solve_zeit_buchstabiene/assets/447049/90cfd0b6-73ae-4921-9407-a4c79bbc72be">
 
-
 Ascii-Representation of the riddle of 26.04.2023:
-
 ```
 
             P   O
@@ -33,7 +31,6 @@ Ascii-Representation of the riddle of 26.04.2023:
 
 ```
 We map these characters as follows:
-
 ```
             8   1
            7     2
@@ -42,16 +39,15 @@ We map these characters as follows:
             5   4
 
 ```
-
 Hence the script would be called like this:
 
-`./solve_zeit_buchstabiene.py towuhratp-f wordlist_file`
+`./solve_zeit_buchstabiene_main.py towuhratp-f wordlist_file`
 
 To only enter a single word, e.g. "autor" (instead of testing a whole bunch from a file), call the script as follows:
 
-`./solve_zeit_buchstabiene.py towuhratp autor`
-
+`./solve_zeit_buchstabiene_main.py towuhratp autor`
 # Usage
+```
 ╭─ Arguments ────────────────────────────────────────────────────────────────────╮
 │ *    mapping      TEXT    [default: None] [required]                           │
 │      word         [WORD]  [default: None]                                      │
@@ -60,7 +56,14 @@ To only enter a single word, e.g. "autor" (instead of testing a whole bunch from
 │ --file  -f      TEXT  [default: None]                                          │
 │ --help                Show this message and exit.                              │
 ╰────────────────────────────────────────────────────────────────────────────────╯
-
-
+```
 # Example Run
 See on [Youtube](https://youtu.be/O0rWH5hdgx0)
+# Run Tests
+In project root directory run:
+
+`pytest`
+
+or
+
+`./solve_zeit_buchstabiene_test.py`
