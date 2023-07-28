@@ -5,11 +5,11 @@ from typing import Optional
 
 import typer
 
-from solve_zeit_buchstabiene import LEN_MAPPING, switch_apps_2, type_word, handle_file
-
+from solve_zeit_buchstabiene import LEN_MAPPING, handle_file, switch_apps, type_word
 
 # get wordlist e.g. from here:
 # https://gist.github.com/MarvinJWendt/2f4f4154b8ae218600eb091a5706b5f4
+
 
 def main(
     mapping: str,
@@ -31,15 +31,15 @@ def main(
         raise typer.Exit()
 
     if word:
-        switch_apps_2()
+        switch_apps()
         type_word(word)
     elif filename:
         file_path = Path(filename).expanduser()
-        switch_apps_2()
+        switch_apps()
         try:
             handle_file(mapping, file_path)
         except IOError as e:
-            switch_apps_2()
+            switch_apps()
             typer.echo(f"Could not open file {file_path}: {e}")
     else:
         typer.echo(

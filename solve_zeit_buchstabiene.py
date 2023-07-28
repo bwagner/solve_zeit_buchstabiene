@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 import os
 from pathlib import Path
+from time import sleep
 
-import pyautogui
+from pynput.keyboard import Controller, Key
 
 LEN_MAPPING = 9
+SLEEP_SECS = 0.06
 
 # So far only used on
 # macOS 13.4.1 (Ventura).
@@ -12,16 +14,17 @@ LEN_MAPPING = 9
 
 # See it in action: https://youtu.be/O0rWH5hdgx0
 
-command_key = "command" if os.name == "darwin" else "ctrl"
+command_key = Key.cmd if os.name == "posix" else Key.ctrl
+keyboard = Controller()
 
-def switch_apps_2():
+
+def switch_apps():
     """
     Switches between applications by pressing Cmd-Tab.
-    Works on the tested system macOS 13.4.1 Ventura.
-    pyautogui.hotkey("command", "tab") does not work.
     """
-    with pyautogui.hold(command_key):
-        pyautogui.press("tab")
+    with keyboard.pressed(command_key):
+        keyboard.type("\t")
+    sleep(SLEEP_SECS)  # do not type too fast after switching apps
 
 
 def get_petals(mapping: str, word: str) -> list[int]:
@@ -64,11 +67,11 @@ def word_ok(mapping: str, word: str) -> bool:
 def type_word(word: str) -> None:
     """
     Types the given word and concludes with Return.
-    Note: On macOS Ventura 13.4.1 pyautogui.press() does not work for Umlauts.
     """
     for ch in word:
-        pyautogui.press(ch)
-    pyautogui.press("return")
+        keyboard.type(ch)
+    keyboard.type("\n")
+    sleep(SLEEP_SECS)
 
 
 def handle_file(mapping: str, word_list_file: str | Path):

@@ -2,7 +2,7 @@
 
 import pytest
 
-from solve_zeit_buchstabiene import word_ok, get_petals
+from solve_zeit_buchstabiene import get_petals, word_ok
 
 # noinspection SpellCheckingInspection
 test_input_verify = [
