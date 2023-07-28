@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import os
 from pathlib import Path
 
 import pyautogui
@@ -12,6 +12,7 @@ LEN_MAPPING = 9
 
 # See it in action: https://youtu.be/O0rWH5hdgx0
 
+command_key = "command" if os.name == "darwin" else "ctrl"
 
 def switch_apps_2():
     """
@@ -19,7 +20,7 @@ def switch_apps_2():
     Works on the tested system macOS 13.4.1 Ventura.
     pyautogui.hotkey("command", "tab") does not work.
     """
-    with pyautogui.hold("command"):
+    with pyautogui.hold(command_key):
         pyautogui.press("tab")
 
 
@@ -33,7 +34,7 @@ def get_petals(mapping: str, word: str) -> list[int]:
     ch: str
     for i, ch in enumerate(word):
         idx: int = mapping.index(ch)
-        mapping[idx] = "-"  # mark char as no longer available
+        mapping[idx] = "-"  # mark char as used
         petals[i] = idx
     return petals
 

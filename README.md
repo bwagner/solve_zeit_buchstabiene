@@ -9,8 +9,8 @@ See [Buchstabiene](https://spiele.zeit.de/buchstabiene/)
 - install dependencies, e.g. `pip install -r requirements.txt`
 - Before running the script, open the riddle in a web browser, then click on
 	the terminal from where you'll run the script.  The script will attempt to
-	change the focus to the web browser by simulating typing of Cmd-Tab for macOS,
-	Ctrl-Tab for Windows
+	change the focus to the web browser by simulating typing of <kbd>Cmd</kbd>-<kbd>Tab</kbd> for macOS,
+	<kbd>Ctrl</kbd>-<kbd>Tab</kbd> for Windows
 
 ## Mapping
 
